@@ -1,0 +1,13 @@
+<ng-container *ngFor="let raffle of raffles">
+  <a routerLink="/raffle/{{raffle.id}}">
+    <div class="raffle-card clearfix">
+      <img class="float-left p-3" src="assets/img/ticket-512.ico" width="100" height="100" alt="">
+      <h4 class="card-title">Raffle Name: {{ raffle.name | uppercase}}</h4>
+      <p *ngIf="raffle.prizeDescription" class="card-body">Description: {{ raffle.prizeDescription }}</p>
+    </div>
+  </a>
+
+</ng-container>
+<div class="p-3">
+  <a class="btn btn-outline-secondary btn-lg" routerLink="/new-raffle">Add Raffle</a>
+</div>

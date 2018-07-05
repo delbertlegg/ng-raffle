@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+label.ng-invalid.ng-touched {
+  color: red;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.raffle-card {
+  padding: 10px;
+  margin: 5px;
+  color: black;
+  border-style: none;
+}
+
+.raffle-card:hover {
+  background-color: lightgray;
+}

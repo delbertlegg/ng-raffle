@@ -1,0 +1,8 @@
+<div class="jumbotron m-3">
+  <h4 class="display-4">{{ raffle.name | uppercase}}</h4>
+  <p *ngIf="raffle.prizeDescription" class="lead">Description: {{ raffle.prizeDescription }}</p>
+  <hr class="my-4">
+  <p>People: {{ peopleCount}} </p>
+  <p>Total Entries: {{ totalEntries }}</p>
+  <canvas #myCanvas *ngIf="totalEntries > 0" id="canvas">{{ chart }}</canvas>
+</div>
