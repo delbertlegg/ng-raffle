@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 import { Person, Entry } from '../models';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class RaffleService {
@@ -22,7 +22,7 @@ export class RaffleService {
   }
 
   getRaffleById(id: string): Observable<Raffle> {
-    return this._httpClient.get<any>(`${this.raffleUrl}/${id}`).pipe(map(res => res.body));
+    return this._httpClient.get<any>(this.raffleUrl, { params: new HttpParams().set('id', id) }).pipe(map(res => res.body));
   }
 
   addRaffle(raffle: Raffle) {
@@ -68,6 +68,10 @@ export class RaffleService {
         raffleId: raffleId
       }
     }).pipe(map(res => res.body));
+  }
+
+  drawWinners() {
+    return this._httpClient.get<any>(this.raffleUrl + '/draw').pipe(map(res => res.body));
   }
 
 }

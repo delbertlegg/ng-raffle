@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -13,6 +14,9 @@ import { RaffleResolver } from './resolvers/raffle.resolver';
 import { RaffleEntryComponent } from './components/raffle-entry/raffle-entry.component';
 import { RaffleAddComponent } from './components/raffle-add/raffle-add.component';
 import { ChartsModule } from 'ng2-charts';
+import { RaffleDrawComponent } from './components/raffle-draw/raffle-draw.component';
+import { ToasterModule, ToasterService } from 'angular5-toaster';
+
 
 
 @NgModule({
@@ -21,18 +25,20 @@ import { ChartsModule } from 'ng2-charts';
     RaffleListComponent,
     RaffleDetailComponent,
     RaffleEntryComponent,
-    RaffleAddComponent
+    RaffleAddComponent,
+    RaffleDrawComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     ChartsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: false }),
-
+    ToasterModule
   ],
-  providers: [RaffleService, RaffleResolver],
+  providers: [RaffleService, RaffleResolver, ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { RaffleService } from '../../services/raffle.service';
 import { Person, Raffle } from '../../models';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { ToasterService } from 'angular5-toaster';
 
 @Component({
   selector: 'app-raffle-entry',
@@ -12,10 +13,14 @@ import { finalize } from 'rxjs/operators';
 export class RaffleEntryComponent implements OnInit {
   form: FormGroup;
   raffles: Raffle[];
-  constructor(private _formBuilder: FormBuilder, private _raffleService: RaffleService, private _router: Router) { }
+  constructor(private _formBuilder: FormBuilder,
+    private _raffleService: RaffleService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _toasterService: ToasterService) { }
 
   ngOnInit() {
-    this._raffleService.getRaffles().subscribe(res => this.raffles = res);
+
     this.form = this._formBuilder.group({
       raffleId: new FormControl(''),
       firstName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -24,6 +29,10 @@ export class RaffleEntryComponent implements OnInit {
       phoneNumber: new FormControl('', [Validators.pattern(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)]),
       numberOfTickets: new FormControl('', [Validators.required, Validators.min(1)])
     });
+    this._raffleService.getRaffles().subscribe(res => {
+      this.raffles = res;
+    });
+    this._route.queryParams.subscribe(params => this.form.controls.raffleId.setValue(params['raffleId'] || ''));
   }
 
   submitEntry() {
@@ -40,6 +49,8 @@ export class RaffleEntryComponent implements OnInit {
           .subscribe();
       }
     });
+    this._toasterService.pop('success', 'Entries Created!',
+      `${entryModel.numberOfTickets} created for ${entryModel.firstName} ${entryModel.lastName}`);
     this._router.navigateByUrl('/raffles');
   }
 }
