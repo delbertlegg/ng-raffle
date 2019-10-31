@@ -1,5 +1,11 @@
 <button id="back" class="btn btn-outline-secondary" (click)="onBackClick()">Back</button>
 <button id="addEntry" class="btn btn-outline-secondary mx-2" (click)="onAddEntryClick()">Add Entry</button>
+<button id="draw" *ngIf="showButton | async" class="btn btn-outline-secondary mx-2" (click)="drawWinner()">Draw Winner</button>
+<ng-container *ngIf="winner | async as entry">
+  <span>{{ entry.winner.firstName }} {{ entry.winner.lastName }}</span>
+</ng-container>
+
+
 
 <div class="jumbotron my-3">
   <h4 class="display-4">{{ raffle.name | uppercase}}</h4>

@@ -15,9 +15,10 @@ import { RaffleEntryComponent } from './components/raffle-entry/raffle-entry.com
 import { RaffleAddComponent } from './components/raffle-add/raffle-add.component';
 import { ChartsModule } from 'ng2-charts';
 import { RaffleDrawComponent } from './components/raffle-draw/raffle-draw.component';
-import { ToasterModule, ToasterService } from 'angular5-toaster';
-
-
+import { ToastrModule } from 'ngx-toastr';
+import { WinnerStore } from './store/winner.store';
+import { WinnerQuery } from './store/winner.query';
+import { RaffleWinnersComponent } from './components/raffle-winners/raffle-winners.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ToasterModule, ToasterService } from 'angular5-toaster';
     RaffleDetailComponent,
     RaffleEntryComponent,
     RaffleAddComponent,
-    RaffleDrawComponent
+    RaffleDrawComponent,
+    RaffleWinnersComponent
   ],
   imports: [
     BrowserModule,
@@ -35,10 +37,10 @@ import { ToasterModule, ToasterService } from 'angular5-toaster';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes, { enableTracing: false }),
-    ToasterModule
+    ToastrModule.forRoot(),
+    RouterModule.forRoot(routes, { enableTracing: false })
   ],
-  providers: [RaffleService, RaffleResolver, ToasterService],
+  providers: [RaffleService, RaffleResolver, WinnerStore, WinnerQuery],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

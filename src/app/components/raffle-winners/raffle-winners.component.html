@@ -1,0 +1,18 @@
+<ng-container *ngIf="entries">
+  <div *ngFor="let entry of entries | async">
+    <div class="raffle-card">
+      <h4>
+        <a *ngIf="!entry.prizeClaimed" [routerLink]="['/raffle/:entry.id', {id: entry.id}]" class="card-title" role="button">{{
+          entry.raffleName |
+          uppercase }}</a>
+        <span *ngIf="entry.prizeClaimed">{{ entry.raffleName | uppercase }}</span>
+      </h4>
+      <div class="card-body">
+        <p>{{ entry.ticketNumber }}</p>
+        <p>{{ entry.winner.firstName }} {{ entry.winner.lastName }}</p>
+        <p class="font-weight-bold text-success" *ngIf="entry.prizeClaimed">Prize Claimed</p>
+        <button *ngIf="!entry.prizeClaimed" (click)="claimPrize(entry)">Claim Prize</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

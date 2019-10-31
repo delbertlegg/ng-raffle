@@ -1,10 +1,11 @@
-<ng-container *ngFor="let entry of entries; let i = index">
-  <div class="raffle-card">
-    <h4 class="card-title">{{ entry.raffleName | uppercase }}</h4>
-    <div class="card-body">
-      <p>{{ entry.ticketNumber }}</p>
-      <p>{{ entry.winner.firstName }} {{ entry.winner.lastName }}</p>
+<div *ngIf="entries">
+  <ng-container *ngFor="let entry of entries | async; let i = index">
+    <div class="raffle-card">
+      <h4 class="card-title">{{ entry.raffleName | uppercase }}</h4>
+      <div class="card-body">
+        <p>{{ entry.ticketNumber }}</p>
+        <p>{{ entry.winner.firstName }} {{ entry.winner.lastName }}</p>
+      </div>
     </div>
-  </div>
-</ng-container>
-<img *ngIf="loading" src="assets/img/loading.gif" width="432" height="332" alt="">
+  </ng-container>
+</div>

@@ -1,16 +1,34 @@
 <div class="col-sm-6">
   <form [formGroup]="form">
-    <div class="form-group">
-      <label for="raffle">Raffle</label>
-      <select class="form-control" name="raffle" id="raffle" formControlName="raffleId">
-        <option *ngFor="let raffle of raffles" [value]="raffle.id">{{ raffle.name }}</option>
-      </select>
-    </div>
+    <ng-container formArrayName="entries" *ngFor="let entry of form.get('entries').controls; let i = index;">
+      <div [formGroupName]="i" class="form-row">
+        <div class="form-group col-md-6">
+          <label for="raffle">Raffle</label>
+          <select class="form-control" name="raffle" id="raffle" formControlName="raffleId">
+            <option *ngFor="let raffle of raffles" [value]="raffle.id">{{ raffle.name }}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4" [ngClass]="{'text-danger': form.controls.entries.controls[i].controls.numberOfTickets.touched && form.controls.entries.controls[i].controls.numberOfTickets.invalid}">
+          <label for="numberOfTickets"># of Tickets</label>
+          <input type="number" class="form-control" id="numberOfTickets" formControlName="numberOfTickets">
+          <ng-container *ngIf="form.controls.numberOfTickets?.errors">
+            <small class="text-danger" *ngIf="form.controls.entries.controls[i].controls.numberOfTickets.touched && form.controls.entries.controls[i].controls.numberOfTickets.errors.required">Number
+              of tickets required</small>
+          </ng-container>
+        </div>
+        <button class="btn btn-link col-md-1" (click)="addEntry()">+</button>
+        <button class="btn btn-link col-md-1" (click)="removeEntry(i)">-</button>
+
+
+      </div>
+    </ng-container>
+
     <div class="form-group" [ngClass]="{'text-danger': form.controls.firstName.touched && form.controls.firstName.invalid}">
       <label for="firstName">First Name</label>
       <input type="text" class="form-control" id="firstName" formControlName="firstName">
       <ng-container *ngIf="form.controls.firstName?.errors">
-        <small class="text-danger" *ngIf="form.controls.firstName.touched && form.controls.firstName.errors.required">First name is required</small>
+        <small class="text-danger" *ngIf="form.controls.firstName.touched && form.controls.firstName.errors.required">First
+          name is required</small>
         <small class="text-danger" *ngIf="form.controls.firstName.errors.maxlength">Maximum of 50 characters</small>
       </ng-container>
     </div>
@@ -18,7 +36,8 @@
       <label for="lastName">Last Name</label>
       <input type="text" class="form-control" id="lastName" formControlName="lastName">
       <ng-container *ngIf="form.controls.lastName?.errors">
-        <small class="text-danger" *ngIf="form.controls.lastName.touched && form.controls.lastName.errors.required">Last name is required</small>
+        <small class="text-danger" *ngIf="form.controls.lastName.touched && form.controls.lastName.errors.required">Last
+          name is required</small>
         <small class="text-danger" *ngIf="form.controls.lastName.errors.maxlength">Maximum of 50 characters</small>
       </ng-container>
     </div>
@@ -27,21 +46,16 @@
       <input type="text" class="form-control" id="emailAddress" formControlName="emailAddress">
       <ng-container *ngIf="form.controls.emailAddress?.errors">
         <small class="text-danger" *ngIf="form.controls.emailAddress.errors.maxlength">Maximum of 50 characters</small>
-        <small class="text-danger" *ngIf="form.controls.emailAddress.touched && form.controls.emailAddress.errors.email">Valid email format only</small>
+        <small class="text-danger" *ngIf="form.controls.emailAddress.touched && form.controls.emailAddress.errors.email">Valid
+          email format only</small>
       </ng-container>
     </div>
     <div class="form-group" [ngClass]="{'text-danger': form.controls.phoneNumber.touched && form.controls.phoneNumber.invalid}">
       <label for="phoneNumber">Phone Number</label>
       <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
       <ng-container *ngIf="form.controls.phoneNumber?.errors">
-        <small class="text-danger" *ngIf="form.controls.phoneNumber.touched && form.controls.phoneNumber.errors.pattern">Valid phone number format only</small>
-      </ng-container>
-    </div>
-    <div class="form-group" [ngClass]="{'text-danger': form.controls.numberOfTickets.touched && form.controls.numberOfTickets.invalid}">
-      <label for="numberOfTickets">Number of Tickets</label>
-      <input type="number" class="form-control" id="numberOfTickets" formControlName="numberOfTickets">
-      <ng-container *ngIf="form.controls.numberOfTickets?.errors">
-        <small class="text-danger" *ngIf="form.controls.numberOfTickets.touched && form.controls.numberOfTickets.errors.required">Number of tickets required</small>
+        <small class="text-danger" *ngIf="form.controls.phoneNumber.touched && form.controls.phoneNumber.errors.pattern">Valid
+          phone number format only</small>
       </ng-container>
     </div>
     <button class="btn btn-primary" (click)="submitEntry()">Submit</button>

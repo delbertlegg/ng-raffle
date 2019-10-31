@@ -5,6 +5,7 @@ import { RaffleResolver } from './resolvers/raffle.resolver';
 import { RaffleEntryComponent } from './components/raffle-entry/raffle-entry.component';
 import { RaffleAddComponent } from './components/raffle-add/raffle-add.component';
 import { RaffleDrawComponent } from './components/raffle-draw/raffle-draw.component';
+import { RaffleWinnersComponent } from './components/raffle-winners/raffle-winners.component';
 
 export const routes: Routes = [
     {
@@ -27,6 +28,10 @@ export const routes: Routes = [
     {
         path: 'draw-all',
         component: RaffleDrawComponent
+    },
+    {
+        path: 'winners',
+        component: RaffleWinnersComponent
     },
     {
         path: '',
